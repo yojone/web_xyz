@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智屿 · 实景案例 | 从施工到落地的全记录</title>
+  <!-- 引入字体，保持品牌一致性 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f8fe;
+      color: #1a2b3c;
+      line-height: 1.5;
+    }
+
+    /* 背景装饰 */
+    .background-aura {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(180, 215, 255, 0.3) 0%, transparent 35%),
+                  radial-gradient(circle at 20% 80%, rgba(140, 200, 245, 0.25) 0%, transparent 40%),
+                  linear-gradient(135deg, #f0f5ff 0%, #f5f9ff 100%);
+      z-index: -2;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem;
+    }
+
+    /* 导航栏 */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 2rem 0;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #1d4a7a, #31699e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2b4e6f;
+      margin-left: 2.5rem;
+      font-weight: 500;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1e4a7a;
+      border-bottom-color: #1e4a7a;
+    }
+
+    .nav-links a.active {
+      border-bottom-color: #1e4a7a;
+      color: #1e4a7a;
+    }
+
+    /* 页面标题 */
+    .page-header {
+      text-align: center;
+      padding: 2rem 1rem 3rem 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #123354;
+      margin-bottom: 1rem;
+    }
+
+    .page-header .subhead {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #345e84;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* 筛选标签 */
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 3rem 0;
+    }
+
+    .filter-tab {
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.8);
+      color: #1f4b70;
+      font-weight: 500;
+      cursor: default;
+      transition: 0.2s;
+    }
+
+    .filter-tab.active {
+      background: #1e4a7a;
+      color: white;
+      border-color: #1e4a7a;
+    }
+
+    /* 案例卡片网格 */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      margin: 3rem 0;
+    }
+
+    .case-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 2.5rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 20px 35px -15px rgba(20, 50, 80, 0.15);
+    }
+
+    .case-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 30px 45px -15px rgba(18, 52, 90, 0.25);
+    }
+
+    /* 图片轮播样式 */
+    .card-image-carousel {
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .carousel-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #c0d4e8;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(0,0,0,0.2);
+      cursor: default;
+      transition: 0.2s;
+    }
+
+    .indicator.active {
+      background: #1e4a7a;
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    .carousel-prev, .carousel-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e4a7a;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      border: 1px solid white;
+    }
+
+    .card-image-carousel:hover .carousel-prev,
+    .card-image-carousel:hover .carousel-next {
+      opacity: 1;
+    }
+
+    .carousel-prev { left: 10px; }
+    .carousel-next { right: 10px; }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .case-location {
+      background: rgba(30, 74, 122, 0.1);
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      color: #1e4a7a;
+    }
+
+    .case-area {
+      color: #5a7897;
+    }
+
+    .card-content h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #102c41;
+    }
+
+    .case-desc {
+      color: #2b506e;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* 施工过程时间线 */
+    .timeline-section {
+      margin: 1.5rem 0;
+      padding: 1rem 0;
+      border-top: 1px dashed rgba(30,74,122,0.2);
+      border-bottom: 1px dashed rgba(30,74,122,0.2);
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      color: #1e4a7a;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .timeline-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .timeline-steps::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #1e4a7a, #9bb9d6);
+      z-index: 0;
+    }
+
+    .step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      flex: 1;
+    }
+
+    .step-dot {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border: 3px solid #1e4a7a;
+      border-radius: 50%;
+      margin: 0 auto 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #1e4a7a;
+      background: white;
+    }
+
+    .step-text {
+      font-size: 0.8rem;
+      color: #2b4e6f;
+      font-weight: 500;
+    }
+
+    .step-date {
+      font-size: 0.7rem;
+      color: #7895b2;
+    }
+
+    /* 设备清单 */
+    .device-list {
+      margin: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .device-tag {
+      background: rgba(255,255,255,0.6);
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      color: #1b4b73;
+    }
+
+    .case-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e4a7a;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 1rem;
+      border-bottom: 1px dashed #9bb7d4;
+      padding-bottom: 0.2rem;
+    }
+
+    /* 落地效果精选 */
+    .gallery-section {
+      margin: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #16344d;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.7);
+      transition: 0.2s;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.7);
+    }
+
+    .gallery-image {
+      height: 160px;
+      position: relative;
+    }
+
+    .gallery-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-caption {
+      padding: 1rem 1.2rem;
+      font-weight: 500;
+      color: #1f4667;
+    }
+
+    .gallery-caption span {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: #537b9f;
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* 施工工艺展示 */
+    .process-showcase {
+      display: flex;
+      gap: 2rem;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      padding: 3rem;
+      margin: 4rem 0;
+      border: 1px solid rgba(255,255,255,0.7);
+      align-items: center;
+    }
+
+    .process-info {
+      flex: 1;
+    }
+
+    .process-info h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #123a58;
+    }
+
+    .process-stats {
+      display: flex;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .process-stat {
+      text-align: center;
+    }
+
+    .process-stat .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e4a7a;
+    }
+
+    .process-stat .label {
+      font-size: 0.9rem;
+      color: #426888;
+    }
+
+    .process-image {
+      flex: 1;
+      height: 280px;
+      border-radius: 2rem;
+      overflow: hidden;
+    }
+
+    .process-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 页脚 */
+    .footer-minimal {
+      margin-top: 5rem;
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      color: #2d5272;
+      border-top: 1px solid rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+
+    .footer-links span {
+      margin-left: 2rem;
+      opacity: 0.7;
+      cursor: default;
+    }
+
+    @media (max-width: 1000px) {
+      .cases-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-showcase { flex-direction: column; }
+    }
+    @media (max-width: 650px) {
+      .container { padding: 1rem 1.2rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- 引入公共组件 -->
+  <script src="components.js"></script>
+</head>
+<body>
+  <div class="background-aura"></div>
+  
+  <div class="container">
+
+    <!-- 导航栏占位符 -->
+    <div data-component="navbar"></div>
+
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1>实景案例 · 从施工到落地</h1>
+      <div class="subhead">每一套智能家居的诞生，都经历了严谨的施工、调试和优化。这里记录了我们落地的真实项目。</div>
+    </div>
+
+    <!-- 分类筛选 -->
+    <div class="filter-tabs">
+      <span class="filter-tab active">全部案例</span>
+      <span class="filter-tab">平层公寓</span>
+      <span class="filter-tab">别墅大宅</span>
+      <span class="filter-tab">商业空间</span>
+      <span class="filter-tab">酒店民宿</span>
+    </div>
+
+    <!-- 主要案例网格 -->
+    <div class="cases-grid">
+      
+      <!-- 案例 1：长沙梅溪湖全宅智能 [citation:1] -->
+      <div class="case-card">
+        <div class="card-image-carousel" id="carousel1">
+          <div class="carousel-container">
+            <!-- 图片1：客厅完工效果 -->
+            <div class="carousel-slide active">
+              <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&auto=format&fit=crop" alt="长沙梅溪湖客厅智能灯光效果">
+            </div>
+            <!-- 图片2：施工过程 - 布线阶段 -->
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800&auto=format&fit=crop" alt="施工布线现场">
+            </div>
+            <!-- 图片3：面板安装 -->
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1558008258-3256797b43f3?w=800&auto=format&fit=crop" alt="智能面板安装">
+            </div>
+            <!-- 图片4：影音室调试 -->
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&auto=format&fit=crop" alt="家庭影院调试">
+            </div>
+          </div>
+          <div class="carousel-indicators">
+            <span class="indicator active" data-index="0"></span>
+            <span class="indicator" data-index="1"></span>
+            <span class="indicator" data-index="2"></span>
+            <span class="indicator" data-index="3"></span>
+          </div>
+          <div class="carousel-prev" data-carousel="1"><i class="fas fa-chevron-left"></i></div>
+          <div class="carousel-next" data-carousel="1"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="case-meta">
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 长沙·梅溪湖</span>
+            <span class="case-area"><i class="fas fa-ruler-combined"></i> 180㎡</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2021.09竣工</span>
+          </div>
+          <h3>梅溪湖全宅智能·新中式融合</h3>
+          <p class="case-desc">全宅智能灯光、空调、电动窗帘控制系统，客厅影院娱乐一体化，可语音和手机一键式开启。面板设计与新中式风格完美融合，音箱巧妙隐藏于装修中。[citation:1]</p>
+          
+          <!-- 施工时间线 -->
+          <div class="timeline-section">
+            <div class="timeline-title"><i class="fas fa-hard-hat"></i> 施工过程</div>
+            <div class="timeline-steps">
+              <div class="step">
+                <div class="step-dot">1</div>
+                <div class="step-text">管线预埋</div>
+                <div class="step-date">2021.06</div>
+              </div>
+              <div class="step">
+                <div class="step-dot">2</div>
+                <div class="step-text">设备安装</div>
+                <div class="step-date">2021.07</div>
+              </div>
+              <div class="step">
+                <div class="step-dot">3</div>
+                <div class="step-text">系统调试</div>
+                <div class="step-date">2021.08</div>
+              </div>
+              <div class="step">
+                <div class="step-dot">4</div>
+                <div class="step-text">交付使用</div>
+                <div class="step-date">2021.09</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 核心设备 -->
+          <div class="device-list">
+            <span class="device-tag">希斯腾科智能系统</span>
+            <span class="device-tag">EMCK影K设备</span>
+            <span class="device-tag">意大利蜗牛5.1</span>
+            <span class="device-tag">100寸隐藏幕布</span>
+          </div>
+          <a href="#" class="case-link">查看完整施工日志 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 案例 2：重庆安纳溪湖别墅 [citation:3] -->
+      <div class="case-card">
+        <div class="card-image-carousel" id="carousel2">
+          <div class="carousel-container">
+            <div class="carousel-slide active">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop" alt="重庆别墅客厅">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&auto=format&fit=crop" alt="弱电施工">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1581578017093-cd30f3a6bdfb?w=800&auto=format&fit=crop" alt="窗帘电机安装">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1545259741-2c3e557c4c8c?w=800&auto=format&fit=crop" alt="安防摄像头">
+            </div>
+          </div>
+          <div class="carousel-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+          </div>
+          <div class="carousel-prev" data-carousel="2"><i class="fas fa-chevron-left"></i></div>
+          <div class="carousel-next" data-carousel="2"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="case-meta">
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 重庆·安纳溪湖</span>
+            <span class="case-area"><i class="fas fa-ruler-combined"></i> 320㎡</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2022.06竣工</span>
+          </div>
+          <h3>安纳溪湖·全宅智能别墅</h3>
+          <p class="case-desc">采用Aqara全屋智能系统，全宅配置超过100个智能设备。包含智能灯光、窗帘、背景音乐、安防监控、全屋网络覆盖。过道及卫生间实现人来灯亮人走灯灭，卧室设计多种灯光氛围。[citation:3]</p>
+          
+          <div class="timeline-section">
+            <div class="timeline-title"><i class="fas fa-hard-hat"></i> 施工过程</div>
+            <div class="timeline-steps">
+              <div class="step"><div class="step-dot">1</div><div class="step-text">点位确认</div><div class="step-date">2022.03</div></div>
+              <div class="step"><div class="step-dot">2</div><div class="step-text">布管穿线</div><div class="step-date">2022.04</div></div>
+              <div class="step"><div class="step-dot">3</div><div class="step-text">设备安装</div><div class="step-date">2022.05</div></div>
+              <div class="step"><div class="step-dot">4</div><div class="step-text">调试交付</div><div class="step-date">2022.06</div></div>
+            </div>
+          </div>
+          
+          <div class="device-list">
+            <span class="device-tag">Aqara网关M1S ×8</span>
+            <span class="device-tag">人体传感器 ×20</span>
+            <span class="device-tag">智能窗帘电机 ×9</span>
+            <span class="device-tag">背景音乐系统</span>
+            <span class="device-tag">8路安防监控</span>
+          </div>
+          <a href="#" class="case-link">查看完整配置清单 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 案例 3：重庆金科美的原上 [citation:7] -->
+      <div class="case-card">
+        <div class="card-image-carousel" id="carousel3">
+          <div class="carousel-container">
+            <div class="carousel-slide active">
+              <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&auto=format&fit=crop" alt="简约客厅">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop" alt="智能面板安装">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1558030137-4e67cccbd7d4?w=800&auto=format&fit=crop" alt="调试现场">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=800&auto=format&fit=crop" alt="楼梯感应灯">
+            </div>
+          </div>
+          <div class="carousel-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+          </div>
+          <div class="carousel-prev" data-carousel="3"><i class="fas fa-chevron-left"></i></div>
+          <div class="carousel-next" data-carousel="3"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="case-meta">
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 重庆·金科美的原上</span>
+            <span class="case-area"><i class="fas fa-ruler-combined"></i> 168㎡</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2022.04竣工</span>
+          </div>
+          <h3>原上·简约主义智能宅</h3>
+          <p class="case-desc">以简约为美，采用欧瑞博智能系统。12.3寸MixPad X智能大屏控制全屋，流线型弧形灯带设计，楼梯实现梯步感应，一步一亮。儿童房设计充满童趣，灯光可随场景变化。[citation:7]</p>
+          
+          <div class="timeline-section">
+            <div class="timeline-title"><i class="fas fa-hard-hat"></i> 施工亮点</div>
+            <div class="timeline-steps">
+              <div class="step"><div class="step-dot">⚡</div><div class="step-text">零火线预留</div></div>
+              <div class="step"><div class="step-dot">🎨</div><div class="step-text">灯带预埋</div></div>
+              <div class="step"><div class="step-dot">🔊</div><div class="step-text">背景音乐</div></div>
+              <div class="step"><div class="step-dot">📶</div><div class="step-text">AC+AP组网</div></div>
+            </div>
+          </div>
+          
+          <div class="device-list">
+            <span class="device-tag">欧瑞博MixPad X</span>
+            <span class="device-tag">超级智能开关 ×20+</span>
+            <span class="device-tag">人体传感器SN20</span>
+            <span class="device-tag">静音窗帘电机</span>
+          </div>
+          <a href="#" class="case-link">查看设计图纸 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 案例 4：宁波鄞州"好房子"样板房 [citation:8] -->
+      <div class="case-card">
+        <div class="card-image-carousel" id="carousel4">
+          <div class="carousel-container">
+            <div class="carousel-slide active">
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&auto=format&fit=crop" alt="青年梦想家样板房">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1595428314736-f5f69f8b7e1a?w=800&auto=format&fit=crop" alt="装配式施工">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop" alt="发电玻璃安装">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1556228578-567ba127e37c?w=800&auto=format&fit=crop" alt="智能厨房">
+            </div>
+          </div>
+          <div class="carousel-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+          </div>
+          <div class="carousel-prev" data-carousel="4"><i class="fas fa-chevron-left"></i></div>
+          <div class="carousel-next" data-carousel="4"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="case-meta">
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 宁波·鄞州</span>
+            <span class="case-area"><i class="fas fa-ruler-combined"></i> 48㎡/64㎡</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2025.12竣工</span>
+          </div>
+          <h3>"好房子"移动样板房</h3>
+          <p class="case-desc">采用装配式装修技术，29天实现从设计到入住。银龄友好家搭载华为全屋智能，AI康养监测；青年梦想家采用小米生态，墨菲床+电竞桌实现百变空间。屋顶铺设发电玻璃，日均发电32度。[citation:8]</p>
+          
+          <div class="timeline-section">
+            <div class="timeline-title"><i class="fas fa-hard-hat"></i> 装配式施工</div>
+            <div class="timeline-steps">
+              <div class="step"><div class="step-dot">1</div><div class="step-text">模块预制</div><div class="step-date">7天</div></div>
+              <div class="step"><div class="step-dot">2</div><div class="step-text">现场组装</div><div class="step-date">10天</div></div>
+              <div class="step"><div class="step-dot">3</div><div class="step-text">智能调试</div><div class="step-date">7天</div></div>
+              <div class="step"><div class="step-dot">4</div><div class="step-text">软装入场</div><div class="step-date">5天</div></div>
+            </div>
+          </div>
+          
+          <div class="device-list">
+            <span class="device-tag">华为全屋智能</span>
+            <span class="device-tag">小米生态</span>
+            <span class="device-tag">碲化镉发电玻璃</span>
+            <span class="device-tag">墨菲床</span>
+          </div>
+          <a href="#" class="case-link">了解装配式工艺 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 施工工艺展示区 [citation:4] -->
+    <div class="process-showcase">
+      <div class="process-info">
+        <h2>13年施工经验沉淀</h2>
+        <p>从2011年国内全屋智能概念提出，到如今落地超430万家庭，我们积累了完整的施工工艺标准。[citation:4]</p>
+        <div class="process-stats">
+          <div class="process-stat">
+            <div class="number">480+</div>
+            <div class="label">物联网专利</div>
+          </div>
+          <div class="process-stat">
+            <div class="number">20000㎡</div>
+            <div class="label">自有超级工厂</div>
+          </div>
+          <div class="process-stat">
+            <div class="number">4重</div>
+            <div class="label">质量管控机制</div>
+          </div>
+        </div>
+        <p style="color:#2b5a80; font-size:0.95rem;">所有产品自主研发、自主生产，4重管控机制、5大实验室严把质量关，确保每一个项目的稳定可靠。[citation:4]</p>
+      </div>
+      <div class="process-image">
+        <img src="https://images.unsplash.com/photo-1581092335871-4f4ff9b6b09b?w=800&auto=format&fit=crop" alt="智能家居生产工厂">
+      </div>
+    </div>
+
+    <!-- 落地效果精选 -->
+    <div class="gallery-section">
+      <div class="section-title">
+        <i class="fas fa-camera-retro"></i>
+        <span>更多落地实景</span>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1556909211-36987daf7b4d?w=600&auto=format&fit=crop" alt="智能客厅">
+          </div>
+          <div class="gallery-caption">
+            杭州·富春江居 <span>客厅灯光场景·观影模式</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=600&auto=format&fit=crop" alt="智能厨房">
+          </div>
+          <div class="gallery-caption">
+            上海·静安府 <span>厨房水浸+烟感联动·可升降灶台</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1631545806457-697faca85f57?w=600&auto=format&fit=crop" alt="卧室睡眠模式">
+          </div>
+          <div class="gallery-caption">
+            深圳·半岛城邦 <span>睡眠监测系统·起夜微光</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1589197490612-c8e606b05ddb?w=600&auto=format&fit=crop" alt="庭院安防">
+          </div>
+          <div class="gallery-caption">
+            北京·格拉斯小镇 <span>周界防护+灯光威慑·AI人形检测</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1600607687644-c7171b4b5f9b?w=600&auto=format&fit=crop" alt="影音室">
+          </div>
+          <div class="gallery-caption">
+            广州·汇景新城 <span>7.1.4杜比全景声·智能遮光</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=600&auto=format&fit=crop" alt="书房">
+          </div>
+          <div class="gallery-caption">
+            成都·麓湖生态城 <span>阅读模式·电动卷帘</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1558882224-dda1667334bb?w=600&auto=format&fit=crop" alt="卫浴">
+          </div>
+          <div class="gallery-caption">
+            南京·钟山高尔夫 <span>智能魔镜·防雾模式</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&auto=format&fit=crop" alt="衣帽间">
+          </div>
+          <div class="gallery-caption">
+            苏州·桃花源 <span>感应灯光·智能除湿</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 页脚占位符 -->
+    <div data-component="footer"></div>
+  </div>
+
+  <!-- 轮播图JavaScript -->
+  <script>
+    // 为每个轮播图添加简单控制
+    document.querySelectorAll('.card-image-carousel').forEach((carousel, index) => {
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const indicators = carousel.querySelectorAll('.indicator');
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      let currentIndex = 0;
+
+      function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(ind => ind.classList.remove('active'));
+        
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentIndex = index;
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(currentIndex - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(currentIndex + 1);
+        });
+      }
+
+      indicators.forEach((ind, idx) => {
+        ind.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(idx);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

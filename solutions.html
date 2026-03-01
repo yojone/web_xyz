@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智屿 · 落地解决方案 | 全屋智能实景</title>
+  <!-- 引入字体，保持一致性 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f8fe;
+      color: #1a2b3c;
+      line-height: 1.5;
+    }
+
+    /* 背景装饰 - 与首页保持一致风格 */
+    .background-aura {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(180, 215, 255, 0.3) 0%, transparent 35%),
+                  radial-gradient(circle at 20% 80%, rgba(140, 200, 245, 0.25) 0%, transparent 40%),
+                  linear-gradient(135deg, #f0f5ff 0%, #f5f9ff 100%);
+      z-index: -2;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem;
+    }
+
+    /* 导航栏 - 保持品牌一致性 */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 2rem 0;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #1d4a7a, #31699e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      cursor: default;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2b4e6f;
+      margin-left: 2.5rem;
+      font-weight: 500;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #1e4a7a;
+      border-bottom-color: #1e4a7a;
+    }
+
+    .nav-links a.active {
+      border-bottom-color: #1e4a7a;
+      color: #1e4a7a;
+    }
+
+    /* 页面标题区 */
+    .page-header {
+      text-align: center;
+      padding: 2rem 1rem 3rem 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #123354;
+      margin-bottom: 1rem;
+    }
+
+    .page-header .subhead {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #345e84;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* 方案筛选标签 */
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 3rem 0;
+    }
+
+    .filter-tab {
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.8);
+      color: #1f4b70;
+      font-weight: 500;
+      cursor: default;
+      transition: 0.2s;
+    }
+
+    .filter-tab.active {
+      background: #1e4a7a;
+      color: white;
+      border-color: #1e4a7a;
+    }
+
+    /* 方案卡片网格 - 主要展示区 */
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      margin: 3rem 0 5rem 0;
+    }
+
+    .solution-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 2.5rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 20px 35px -15px rgba(20, 50, 80, 0.15);
+    }
+
+    .solution-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 30px 45px -15px rgba(18, 52, 90, 0.25);
+    }
+
+    /* 图片占位区 - 这里是你需要替换为图床图片的位置 */
+    .card-image {
+      height: 240px;
+      background: linear-gradient(145deg, #d9e8f5, #c0d9f0);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3a698b;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* 图片占位提示 - 上线前请替换为真实图片URL */
+    .image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .image-placeholder i {
+      font-size: 3rem;
+      color: #4d7ca1;
+    }
+
+    .placeholder-text {
+      background: rgba(255,255,255,0.5);
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1f4970;
+    }
+
+    /* 真实图片样式 (当替换后使用) */
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .card-content {
+      padding: 2rem 2rem 2.2rem 2rem;
+    }
+
+    .solution-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.7);
+      padding: 0.2rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1e4a7a;
+      margin-bottom: 1rem;
+      border: 1px solid white;
+    }
+
+    .card-content h3 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #102c41;
+    }
+
+    .card-content p {
+      color: #2b506e;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .spec-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 1.5rem 0 1.2rem 0;
+    }
+
+    .spec-item-small {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #2a5980;
+    }
+
+    .spec-item-small i {
+      color: #3673a5;
+    }
+
+    .case-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e4a7a;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 1rem;
+      border-bottom: 1px dashed #9bb7d4;
+      padding-bottom: 0.2rem;
+      cursor: pointer;
+    }
+
+    .case-link:hover {
+      color: #235f97;
+      border-bottom-color: #1e4a7a;
+    }
+
+    /* 项目统计横幅 */
+    .stats-banner {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 4rem;
+      padding: 2.5rem 2rem;
+      margin: 4rem 0;
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #123a58;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-weight: 300;
+      color: #2b5a80;
+      letter-spacing: 0.3px;
+    }
+
+    /* 实景案例精选 - 小卡片网格 */
+    .gallery-section {
+      margin: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #16344d;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.7);
+      transition: 0.2s;
+      cursor: default;
+    }
+
+    .gallery-item:hover {
+      background: rgba(255,255,255,0.7);
+    }
+
+    .gallery-image {
+      height: 150px;
+      background: #cbdbe9;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #345e84;
+    }
+
+    .gallery-image .image-placeholder {
+      transform: scale(0.8);
+    }
+
+    .gallery-caption {
+      padding: 1rem 1.2rem 1.2rem 1.2rem;
+      font-weight: 500;
+      color: #1f4667;
+    }
+
+    .gallery-caption span {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: #537b9f;
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* 页脚 */
+    .footer-minimal {
+      margin-top: 5rem;
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      color: #2d5272;
+      border-top: 1px solid rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+
+    .footer-links span {
+      margin-left: 2rem;
+      opacity: 0.7;
+      transition: 0.2s;
+      cursor: default;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1000px) {
+      .solutions-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 650px) {
+      .container { padding: 1rem 1.2rem; }
+      .page-header h1 { font-size: 2.5rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .nav-links a { margin-left: 1.2rem; }
+    }
+  </style>
+  <!-- 引入公共组件 -->
+  <script src="components.js"></script>
+</head>
+<body>
+  <div class="background-aura"></div>
+  
+  <div class="container">
+
+    <!-- 导航栏占位符 -->
+    <div data-component="navbar"></div>
+
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1>已落地的智能方案</h1>
+      <div class="subhead">从真实家庭到商业空间，每一个项目都是对未来生活的探索与实践</div>
+    </div>
+
+    <!-- 分类筛选 (静态展示) -->
+    <div class="filter-tabs">
+      <span class="filter-tab active">全部方案</span>
+      <span class="filter-tab">平层公寓</span>
+      <span class="filter-tab">别墅大宅</span>
+      <span class="filter-tab">商业空间</span>
+      <span class="filter-tab">酒店民宿</span>
+    </div>
+
+    <!-- ========= 主要方案展示 ========= -->
+    <!-- 这里每个卡片都有图片占位区，请将image-placeholder部分替换为<img>标签引入你的图床图片 -->
+    <div class="solutions-grid">
+      
+      <!-- 方案 1：极简平层 · 光影魔术师 -->
+      <div class="solution-card">
+        <div class="card-image">
+          <!-- TODO: 替换为你的图床图片 - 极简客厅智能灯光方案 -->
+          <!-- 示例替换方式：<img src="https://你的图床域名/images/solution-1.jpg" alt="极简客厅智能灯光"> -->
+          <div class="image-placeholder">
+            <i class="fas fa-image"></i>
+            <span class="placeholder-text">图床位置: solutions/modern-living.jpg</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <span class="solution-tag"><i class="fas fa-building"></i> 平层公寓 · 120㎡</span>
+          <h3>光影魔术师</h3>
+          <p>全屋无主灯设计，通过存在传感器实现人来灯亮、人走缓灭。全屋色温跟随自然节律，2700K-6500K无级调节。</p>
+          <div class="spec-list">
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 48个智能设备</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 凌动开关</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 人体存在传感器</span>
+          </div>
+          <a href="#" class="case-link">查看完整配置 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 方案 2：别墅 · 全景安防+影音 -->
+      <div class="solution-card">
+        <div class="card-image">
+          <!-- TODO: 替换为你的图床图片 - 别墅影音室/安防控制台 -->
+          <div class="image-placeholder">
+            <i class="fas fa-image"></i>
+            <span class="placeholder-text">图床位置: solutions/villa-theater.jpg</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <span class="solution-tag"><i class="fas fa-chess-rook"></i> 独栋别墅 · 360㎡</span>
+          <h3>无界守护+沉浸影院</h3>
+          <p>全宅安防系统与AI摄像头联动，陌生人徘徊自动通知。地下影音室一键切换观影模式，7.1.4全景声沉浸体验。</p>
+          <div class="spec-list">
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 12路安防监控</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 全宅背景音乐</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 智能遮阳</span>
+          </div>
+          <a href="#" class="case-link">查看完整配置 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 方案 3：民宿 · 无人化自助入住 -->
+      <div class="solution-card">
+        <div class="card-image">
+          <!-- TODO: 替换为你的图床图片 - 民宿门锁/智能前台 -->
+          <div class="image-placeholder">
+            <i class="fas fa-image"></i>
+            <span class="placeholder-text">图床位置: solutions/homestay.jpg</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <span class="solution-tag"><i class="fas fa-tree"></i> 山间民宿 · 6间客房</span>
+          <h3>无人化自助管家</h3>
+          <p>客人线上预订后，系统自动下发临时密码。客房内灯光、空调根据入住时段自动预设，退房后一键恢复节能状态。</p>
+          <div class="spec-list">
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 智能门锁联动</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 能耗管理</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 语音管家</span>
+          </div>
+          <a href="#" class="case-link">查看完整配置 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 方案 4：大平层 · 全屋气候系统 -->
+      <div class="solution-card">
+        <div class="card-image">
+          <!-- TODO: 替换为你的图床图片 - 中央空调/新风系统控制界面或风口实景 -->
+          <div class="image-placeholder">
+            <i class="fas fa-image"></i>
+            <span class="placeholder-text">图床位置: solutions/climate.jpg</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <span class="solution-tag"><i class="fas fa-wind"></i> 大平层 · 200㎡</span>
+          <h3>气候管家 Pro</h3>
+          <p>分区温控+新风除湿联动，每个房间独立设置温湿度。CO₂、PM2.5实时监测，自动置换新鲜空气。</p>
+          <div class="spec-list">
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 中央空调集成</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 地暖控制</span>
+            <span class="spec-item-small"><i class="fas fa-check-circle"></i> 加湿除湿</span>
+          </div>
+          <a href="#" class="case-link">查看完整配置 <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 统计数据横幅 - 增加可信度 -->
+    <div class="stats-banner">
+      <div class="stat-item">
+        <div class="stat-number">47+</div>
+        <div class="stat-label">落地项目</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">客户满意</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">认证工程师</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">8</div>
+        <div class="stat-label">生态品牌</div>
+      </div>
+    </div>
+
+    <!-- 实景案例精选 - 小图集 -->
+    <div class="gallery-section">
+      <div class="section-title">
+        <i class="fas fa-camera-retro"></i>
+        <span>实景案例精选</span>
+      </div>
+      <div class="gallery-grid">
+        
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <!-- TODO: 图床图片 - 智能客厅实景 -->
+            <div class="image-placeholder">
+              <i class="fas fa-camera"></i>
+              <span class="placeholder-text">客厅·暮色</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            杭州·富春江居 <span>客厅灯光场景</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <!-- TODO: 图床图片 - 智能厨房 -->
+            <div class="image-placeholder">
+              <i class="fas fa-camera"></i>
+              <span class="placeholder-text">厨房·感应</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            上海·静安府 <span>水浸+烟感联动</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <!-- TODO: 图床图片 - 卧室睡眠模式 -->
+            <div class="image-placeholder">
+              <i class="fas fa-camera"></i>
+              <span class="placeholder-text">卧室·助眠</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            深圳·半岛城邦 <span>睡眠监测系统</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-image">
+            <!-- TODO: 图床图片 - 庭院安防 -->
+            <div class="image-placeholder">
+              <i class="fas fa-camera"></i>
+              <span class="placeholder-text">庭院·安防</span>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            北京·格拉斯小镇 <span>周界防护+灯光威慑</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提示如何替换图片 -->
+    <div style="background: rgba(255,255,240,0.5); backdrop-filter: blur(8px); border-radius: 2rem; padding: 1.5rem 2rem; margin: 3rem 0; border: 1px solid #ffe0a0; color: #5f4a2e;">
+      <p style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.95rem;">
+        <i class="fas fa-info-circle" style="font-size: 1.4rem; color: #b85c00;"></i> 
+        <span><strong>图片替换指引：</strong> 将每个 <code>.image-placeholder</code> 块替换为 <code>&lt;img src="你的图床图片URL" alt="描述" style="width:100%; height:100%; object-fit:cover;"&gt;</code>。图床推荐使用腾讯云COS、阿里云OSS、七牛云或SM.MS等。</span>
+      </p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-minimal">
+      <span><i class="far fa-copyright"></i> 2026 智屿 · 全屋智能体验</span>
+      <div class="footer-links">
+        <span><i class="fa-regular fa-message"></i> 咨询顾问</span>
+        <span><i class="fa-regular fa-file-lines"></i> 方案手册</span>
+        <span><i class="fa-regular fa-images"></i> 实景相册</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

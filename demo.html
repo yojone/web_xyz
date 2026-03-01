@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>智屿 · 3D虚拟演示 | 全屋智能互动体验</title>
+    <!-- 引入字体，保持品牌一致性 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            background-color: #111;
+            color: #fff;
+        }
+
+        /* 导航栏 - 悬浮样式 */
+        .nav-bar {
+            position: fixed;
+            top: 1.5rem;
+            left: 2.5rem;
+            right: 2.5rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background: rgba(30, 40, 55, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 60px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #a0c8ff, #6ea8ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e8ff;
+            margin-left: 2.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: 0.2s;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: white;
+        }
+
+        .nav-links a.active {
+            color: white;
+            opacity: 1;
+            border-bottom: 2px solid #4a9eff;
+            padding-bottom: 0.2rem;
+        }
+
+        /* 控制面板 - 右侧悬浮 */
+        .control-panel {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            background: rgba(20, 28, 40, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 1.5rem 1.2rem;
+            width: 260px;
+            color: white;
+            box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.5);
+            pointer-events: all;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b8d6ff;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 0.8rem;
+        }
+
+        .device-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .device-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        .device-header i {
+            width: 1.8rem;
+            height: 1.8rem;
+            background: rgba(74, 158, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a9eff;
+        }
+
+        .switch-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 40px;
+            padding: 0.3rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .switch-option {
+            flex: 1;
+            text-align: center;
+            padding: 0.4rem 0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .switch-option.active {
+            background: #4a9eff;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(74, 158, 255, 0.4);
+        }
+
+        /* 窗帘滑块 */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .slider-container i {
+            color: #4a9eff;
+            font-size: 0.9rem;
+        }
+
+        input[type=range] {
+            flex: 1;
+            height: 5px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #4a9eff, #6d6d6d);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 2px solid #4a9eff;
+        }
+
+        .slider-value {
+            min-width: 2.5rem;
+            text-align: right;
+            font-size: 0.85rem;
+            color: #b0d0ff;
+        }
+
+        /* 左下角提示 */
+        .hint-box {
+            position: fixed;
+            bottom: 2rem;
+            left: 2.5rem;
+            z-index: 40;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 0.6rem 1.5rem;
+            color: #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            pointer-events: none;
+        }
+
+        .hint-box i {
+            color: #4a9eff;
+        }
+
+        /* 加载提示 */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #4a9eff;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+    <!-- 引入公共组件 -->
+    <script src="components.js"></script>
+</head>
+<body>
+    <!-- 导航栏占位符 -->
+    <div data-component="navbar"></div>
+
+    <!-- 右侧控制面板 -->
+    <div class="control-panel">
+        <div class="panel-title">
+            <i class="fas fa-sliders-h"></i> 智能控制
+        </div>
+        
+        <!-- 灯光控制 -->
+        <div class="device-item">
+            <div class="device-header">
+                <i class="fas fa-lightbulb"></i>
+                <span>客厅灯光</span>
+            </div>
+            <div class="switch-status" id="light-switch">
+                <span class="switch-option active" data-state="on" id="light-on">开启</span>
+                <span class="switch-option" data-state="off" id="light-off">关闭</span>
+            </div>
+        </div>
+
+        <!-- 窗帘控制 -->
+        <div class="device-item">
+            <div class="device-header">
+                <i class="fas fa-curtains"></i>
+                <span>电动窗帘</span>
+            </div>
+            <div class="slider-container">
+                <i class="fas fa-sun"></i>
+                <input type="range" id="curtain-slider" min="0" max="100" value="0">
+                <span class="slider-value" id="slider-value">0%</span>
+            </div>
+            <div style="font-size:0.8rem; color:#aaa; margin-top:0.3rem; text-align:center;">
+                ← 关闭 · 打开 →
+            </div>
+        </div>
+
+        <div style="margin-top:1rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem; font-size:0.85rem; color:#8899bb; text-align:center;">
+            <i class="fas fa-mouse-pointer"></i> 点击墙壁开关 · 拖拽旋转视角
+        </div>
+    </div>
+
+    <!-- 左下角提示 -->
+    <div class="hint-box">
+        <i class="fas fa-info-circle"></i>
+        <span>鼠标拖拽旋转视角 | 滚轮缩放 | 点击墙壁开关控制灯光</span>
+    </div>
+
+    <!-- 加载动画 -->
+    <div id="loading">
+        <div class="loader-text">
+            <div class="spinner"></div>
+            <span>加载3D场景中...</span>
+        </div>
+    </div>
+
+    <!-- 引入Three.js核心库和控制器 -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        // --- 初始化场景、相机、渲染器 ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111a22); // 深色背景
+        
+        // 添加一点雾效，增加深度感
+        scene.fog = new THREE.Fog(0x111a22, 20, 50);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(8, 6, 12);
+        camera.lookAt(4, 2, 4);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true; // 开启阴影
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // CSS2渲染器用于标签
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.left = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none'; // 让标签不阻挡点击
+        document.body.appendChild(labelRenderer.domElement);
+
+        // --- 控制器 (支持旋转、缩放) ---
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = true;
+        controls.maxPolarAngle = Math.PI / 2.2; // 限制角度，避免看到地底
+        controls.minDistance = 5;
+        controls.maxDistance = 25;
+        controls.target.set(4, 2, 4);
+
+        // --- 灯光系统 ---
+        
+        // 环境光 (基础照明)
+        const ambientLight = new THREE.AmbientLight(0x404060);
+        scene.add(ambientLight);
+
+        // 主光源 - 模拟太阳 (产生阴影)
+        const dirLight = new THREE.DirectionalLight(0xfff5e6, 1);
+        dirLight.position.set(5, 15, 10);
+        dirLight.castShadow = true;
+        dirLight.receiveShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        const d = 15;
+        dirLight.shadow.camera.left = -d;
+        dirLight.shadow.camera.right = d;
+        dirLight.shadow.camera.top = d;
+        dirLight.shadow.camera.bottom = -d;
+        dirLight.shadow.camera.near = 1;
+        dirLight.shadow.camera.far = 30;
+        scene.add(dirLight);
+
+        // 辅助点光源 - 让墙面更有层次
+        const fillLight = new THREE.PointLight(0x446688, 0.5);
+        fillLight.position.set(2, 5, 5);
+        scene.add(fillLight);
+
+        // --- 可交互的灯光 (客厅主灯) ---
+        // 这是一个可以开关的灯泡模型 (用发光球体表示)
+        const bulbLight = new THREE.PointLight(0xffeedd, 1, 12);
+        bulbLight.position.set(4, 5, 3.5);
+        bulbLight.castShadow = true;
+        scene.add(bulbLight);
+
+        // 灯泡的发光球体 (视觉反馈)
+        const bulbGlow = new THREE.Mesh(
+            new THREE.SphereGeometry(0.4, 16, 16),
+            new THREE.MeshStandardMaterial({ color: 0xffeedd, emissive: 0xffaa55 })
+        );
+        bulbGlow.position.set(4, 5, 3.5);
+        bulbGlow.castShadow = true;
+        scene.add(bulbGlow);
+
+        // 灯泡底座/灯罩
+        const bulbBase = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.5, 0.5, 0.2, 8),
+            new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.4, metalness: 0.7 })
+        );
+        bulbBase.position.set(4, 5.25, 3.5);
+        bulbBase.castShadow = true;
+        bulbBase.receiveShadow = true;
+        scene.add(bulbBase);
+
+        // 记录灯光状态
+        let lightOn = true;
+
+        // --- 构建简易户型图 ---
+        
+        // 地面
+        const floorGeometry = new THREE.PlaneGeometry(10, 10);
+        const floorMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x2a3a4a,
+            roughness: 0.6,
+            metalness: 0.1
+        });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.set(4, 0, 4);
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // 地面网格辅助线 (增加科技感)
+        const gridHelper = new THREE.GridHelper(10, 20, 0x4a9eff, 0x335577);
+        gridHelper.position.set(4, 0.01, 4);
+        scene.add(gridHelper);
+
+        // --- 墙壁 ---
+        function createWall(width, height, depth, color, posX, posY, posZ, rotY = 0) {
+            const geometry = new THREE.BoxGeometry(width, height, depth);
+            const material = new THREE.MeshStandardMaterial({ color, roughness: 0.4, emissive: 0x000000 });
+            const wall = new THREE.Mesh(geometry, material);
+            wall.position.set(posX, posY, posZ);
+            wall.rotation.y = rotY;
+            wall.castShadow = true;
+            wall.receiveShadow = true;
+            return wall;
+        }
+
+        // 墙体颜色
+        const wallColor = 0xaaccff;
+        const wallColorDark = 0x8aacdd;
+
+        // 后墙 (z=0)
+        scene.add(createWall(10, 4, 0.3, wallColor, 4, 2, 0));
+        // 左墙 (x=0)
+        scene.add(createWall(0.3, 4, 10, wallColor, 0, 2, 4));
+        // 右墙 (x=8)
+        scene.add(createWall(0.3, 4, 10, wallColor, 8, 2, 4));
+        // 前墙 (z=8) - 留出窗户位置
+        const frontWallLeft = createWall(3, 4, 0.3, wallColor, 2, 2, 8);
+        scene.add(frontWallLeft);
+        const frontWallRight = createWall(3, 4, 0.3, wallColor, 6, 2, 8);
+        scene.add(frontWallRight);
+        // 窗户上方的墙
+        const windowTop = createWall(4, 1, 0.3, wallColor, 4, 3.5, 8);
+        scene.add(windowTop);
+        // 窗户下方的矮墙
+        const windowBottom = createWall(4, 1.2, 0.3, wallColor, 4, 0.6, 8);
+        scene.add(windowBottom);
+
+        // 中间隔断墙 (客厅和餐厅/卧室的区分)
+        scene.add(createWall(0.3, 4, 5, wallColorDark, 5, 2, 3));
+
+        // --- 窗户玻璃 (透明) ---
+        const glassGeo = new THREE.BoxGeometry(4, 2.2, 0.1);
+        const glassMat = new THREE.MeshStandardMaterial({ 
+            color: 0x88aadd, 
+            transparent: true, 
+            opacity: 0.3,
+            emissive: 0x113355
+        });
+        const glass = new THREE.Mesh(glassGeo, glassMat);
+        glass.position.set(4, 2.2, 8.05);
+        glass.castShadow = true;
+        glass.receiveShadow = true;
+        scene.add(glass);
+
+        // --- 窗帘 (左右两片) ---
+        const curtainMat = new THREE.MeshStandardMaterial({ color: 0x6688aa, emissive: 0x112233 });
+        
+        // 左窗帘
+        const curtainLeft = new THREE.Mesh(new THREE.BoxGeometry(1.8, 3, 0.2), curtainMat);
+        curtainLeft.position.set(2.1, 2, 7.9);
+        curtainLeft.castShadow = true;
+        curtainLeft.receiveShadow = true;
+        scene.add(curtainLeft);
+        
+        // 右窗帘
+        const curtainRight = new THREE.Mesh(new THREE.BoxGeometry(1.8, 3, 0.2), curtainMat);
+        curtainRight.position.set(5.9, 2, 7.9);
+        curtainRight.castShadow = true;
+        curtainRight.receiveShadow = true;
+        scene.add(curtainRight);
+
+        // 窗帘杆
+        const rodGeo = new THREE.CylinderGeometry(0.1, 0.1, 4.2, 8);
+        const rodMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.3, metalness: 0.8 });
+        const rod = new THREE.Mesh(rodGeo, rodMat);
+        rod.rotation.z = Math.PI / 2;
+        rod.position.set(4, 3.2, 7.95);
+        rod.castShadow = true;
+        scene.add(rod);
+
+        // --- 墙壁开关 (可点击) ---
+        function createSwitch(posX, posY, posZ, targetLight) {
+            const switchGroup = new THREE.Group();
+            
+            // 底座
+            const baseGeo = new THREE.BoxGeometry(0.6, 0.9, 0.1);
+            const baseMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.set(0, 0, 0);
+            base.castShadow = true;
+            base.receiveShadow = true;
+            switchGroup.add(base);
+            
+            // 按钮 (红色/绿色表示状态)
+            const buttonGeo = new THREE.BoxGeometry(0.4, 0.4, 0.15);
+            const buttonMat = new THREE.MeshStandardMaterial({ color: 0x00aa00 }); // 默认绿色
+            const button = new THREE.Mesh(buttonGeo, buttonMat);
+            button.position.set(0, 0.1, 0.08);
+            button.castShadow = true;
+            button.receiveShadow = true;
+            button.userData = { type: 'switch-button', lightGroup: targetLight, isOn: true };
+            switchGroup.add(button);
+            
+            switchGroup.position.set(posX, posY, posZ);
+            
+            // 为了点击检测，我们需要让整个group可交互，但按钮单独处理材质变色
+            return { group: switchGroup, button };
+        }
+
+        // 创建两个开关：一个在客厅墙上，一个在卧室
+        const switch1 = createSwitch(1.5, 2.2, 2.5, { bulbLight, bulbGlow });
+        scene.add(switch1.group);
+        
+        const switch2 = createSwitch(6.5, 2.2, 2.5, { bulbLight, bulbGlow });
+        scene.add(switch2.group);
+
+        // 添加一个小桌子或家具，增加场景丰富度
+        const tableGeo = new THREE.CylinderGeometry(0.8, 0.8, 0.1, 16);
+        const tableMat = new THREE.MeshStandardMaterial({ color: 0x8b6b4d });
+        const table = new THREE.Mesh(tableGeo, tableMat);
+        table.position.set(4, 0.05, 3);
+        table.receiveShadow = true;
+        table.castShadow = true;
+        scene.add(table);
+
+        const tableLegGeo = new THREE.CylinderGeometry(0.1, 0.1, 1, 6);
+        const tableLegMat = new THREE.MeshStandardMaterial({ color: 0x5a3e2b });
+        for (let i = -1; i <= 1; i+=2) {
+            for (let j = -1; j <= 1; j+=2) {
+                const leg = new THREE.Mesh(tableLegGeo, tableLegMat);
+                leg.position.set(4 + i*0.6, 0.5, 3 + j*0.6);
+                leg.castShadow = true;
+                leg.receiveShadow = true;
+                scene.add(leg);
+            }
+        }
+
+        // 天花板上的灯槽 (装饰)
+        const ceilingLight = new THREE.Mesh(
+            new THREE.BoxGeometry(1.5, 0.1, 1.5),
+            new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x224466 })
+        );
+        ceilingLight.position.set(4, 3.95, 3.5);
+        ceilingLight.receiveShadow = true;
+        scene.add(ceilingLight);
+
+        // 保存窗帘引用
+        const curtains = { left: curtainLeft, right: curtainRight };
+
+        // --- 交互：点击检测 (Raycaster) ---
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        function onClick(event) {
+            // 计算鼠标位置归一化坐标
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // 检测所有可交互物体：开关的按钮
+            const buttons = [switch1.button, switch2.button];
+            const intersects = raycaster.intersectObjects(buttons);
+
+            if (intersects.length > 0) {
+                const hit = intersects[0].object;
+                if (hit.userData.type === 'switch-button') {
+                    // 切换灯光状态
+                    lightOn = !lightOn;
+                    
+                    // 更新灯光和灯泡材质
+                    bulbLight.visible = lightOn;
+                    if (lightOn) {
+                        bulbGlow.material.emissive.setHex(0xffaa55);
+                        bulbGlow.material.color.setHex(0xffeedd);
+                        hit.material.color.setHex(0x00aa00); // 绿色
+                    } else {
+                        bulbGlow.material.emissive.setHex(0x000000);
+                        bulbGlow.material.color.setHex(0x555555);
+                        hit.material.color.setHex(0xff3333); // 红色
+                    }
+                    
+                    // 更新UI开关状态
+                    updateLightUI(lightOn);
+                }
+            }
+        }
+
+        window.addEventListener('click', onClick);
+
+        // --- UI控制面板交互 ---
+        // 灯光开关
+        document.getElementById('light-on').addEventListener('click', () => {
+            if (!lightOn) {
+                lightOn = true;
+                bulbLight.visible = true;
+                bulbGlow.material.emissive.setHex(0xffaa55);
+                bulbGlow.material.color.setHex(0xffeedd);
+                switch1.button.material.color.setHex(0x00aa00);
+                switch2.button.material.color.setHex(0x00aa00);
+                updateLightUI(true);
+            }
+        });
+
+        document.getElementById('light-off').addEventListener('click', () => {
+            if (lightOn) {
+                lightOn = false;
+                bulbLight.visible = false;
+                bulbGlow.material.emissive.setHex(0x000000);
+                bulbGlow.material.color.setHex(0x555555);
+                switch1.button.material.color.setHex(0xff3333);
+                switch2.button.material.color.setHex(0xff3333);
+                updateLightUI(false);
+            }
+        });
+
+        function updateLightUI(isOn) {
+            const onEl = document.getElementById('light-on');
+            const offEl = document.getElementById('light-off');
+            if (isOn) {
+                onEl.classList.add('active');
+                offEl.classList.remove('active');
+            } else {
+                onEl.classList.remove('active');
+                offEl.classList.add('active');
+            }
+        }
+
+        // 窗帘滑块
+        const slider = document.getElementById('curtain-slider');
+        const sliderVal = document.getElementById('slider-value');
+        
+        slider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            sliderVal.textContent = val + '%';
+            
+            // 窗帘移动逻辑：左右窗帘向中间关闭，向两侧打开
+            // 0% = 完全打开 (窗帘在两侧)
+            // 100% = 完全关闭 (窗帘在中间)
+            // 左窗帘: x 范围 2.1 (开) -> 3.1 (关)
+            // 右窗帘: x 范围 5.9 (开) -> 4.9 (关)
+            const leftRange = { open: 2.1, close: 3.1 };
+            const rightRange = { open: 5.9, close: 4.9 };
+            
+            const t = val / 100; // 0~1 对应 开->关
+            
+            curtains.left.position.x = leftRange.open + (leftRange.close - leftRange.open) * t;
+            curtains.right.position.x = rightRange.open + (rightRange.close - rightRange.open) * t;
+        });
+
+        // --- 隐藏loading ---
+        setTimeout(() => {
+            document.getElementById('loading').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 500);
+        }, 1500);
+
+        // --- 动画循环 ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 更新控制器
+            controls.update();
+
+            // 渲染主场景
+            renderer.render(scene, camera);
+            
+            // 渲染CSS标签 (这里没有实际标签，但保留)
+            labelRenderer.render(scene, camera);
+        }
+
+        animate();
+
+        // --- 窗口自适应 ---
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 调试用：将场景对象暴露到控制台方便调试 (可选)
+        // window.scene = scene;
+    </script>
+</body>
+</html>
