@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>气候管家 Pro · 200㎡大平层温湿平衡方案 | 智屿全屋智能</title>
+  <meta name="description" content="分区温控+新风除湿联动，每个房间独立设置温湿度，CO₂、PM2.5实时监测，自动置换新鲜空气。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: #f5f8fe; color: #1a2b3c; line-height: 1.5; }
+    .background-aura { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(180, 215, 255, 0.3) 0%, transparent 35%), radial-gradient(circle at 20% 80%, rgba(140, 200, 245, 0.25) 0%, transparent 40%), linear-gradient(135deg, #f0f5ff 0%, #f5f9ff 100%); z-index: -2; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 2rem 2.5rem; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0 2rem 0; }
+    .logo { font-size: 1.8rem; font-weight: 700; background: linear-gradient(145deg, #1d4a7a, #31699e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .nav-links a { text-decoration: none; color: #2b4e6f; margin-left: 2.5rem; font-weight: 500; transition: 0.2s; }
+    .nav-links a:hover { color: #1e4a7a; }
+    .nav-links a.active { color: #1e4a7a; border-bottom: 2px solid #1e4a7a; padding-bottom: 0.2rem; }
+    .footer-minimal { margin-top: 5rem; padding: 2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; color: #2d5272; border-top: 1px solid rgba(255,255,255,0.7); font-weight: 300; }
+    .footer-links span { margin-left: 2rem; opacity: 0.7; cursor: default; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .breadcrumb a { text-decoration: none; color: #2b5a80; transition: 0.2s; }
+    .breadcrumb a:hover { color: #1e4a7a; }
+    .breadcrumb .separator { color: #9bb7d4; }
+    .breadcrumb .current { color: #1e4a7a; font-weight: 500; }
+    @media (max-width: 768px) { 
+      .container { padding: 1rem; } 
+      .nav-bar { flex-direction: column; gap: 1rem; } 
+      .nav-links a { margin-left: 1rem; } 
+      .footer-links span { margin-left: 1rem; }
+      .breadcrumb { font-size: 0.85rem; flex-wrap: wrap; }
+    }
+    .solution-hero { display: flex; gap: 2rem; background: rgba(255,255,255,0.4); backdrop-filter: blur(16px); border-radius: 2.5rem; padding: 2rem; margin-bottom: 3rem; border: 1px solid rgba(255,255,255,0.7); flex-wrap: wrap; }
+    .hero-image { flex: 1; min-width: 300px; height: 300px; border-radius: 1.5rem; overflow: hidden; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-content { flex: 1; min-width: 300px; }
+    .hero-content h1 { font-size: 2.8rem; color: #123a58; margin-bottom: 0.5rem; }
+    .hero-meta { display: flex; gap: 1.5rem; margin: 1rem 0; color: #2b5a80; }
+    .section-title { font-size: 2rem; font-weight: 600; margin: 3rem 0 2rem; color: #16344d; display: flex; align-items: center; gap: 0.8rem; }
+    .device-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+    .device-card { background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); border-radius: 1.5rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.7); }
+    .device-card i { font-size: 2rem; color: #1e4a7a; margin-bottom: 1rem; }
+    .scene-list { display: flex; flex-direction: column; gap: 1rem; }
+    .scene-item { background: rgba(255,255,255,0.3); border-radius: 1rem; padding: 1rem 1.5rem; border-left: 4px solid #1e4a7a; }
+    .timeline-steps { display: flex; justify-content: space-between; margin: 2rem 0; position: relative; }
+    .timeline-steps::before { content: ''; position: absolute; top: 15px; left: 0; right: 0; height: 2px; background: #1e4a7a; z-index: 0; }
+    .step { position: relative; z-index: 1; text-align: center; flex: 1; }
+    .step-dot { width: 30px; height: 30px; background: white; border: 3px solid #1e4a7a; border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #1e4a7a; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
+    .gallery-item { height: 150px; border-radius: 1rem; overflow: hidden; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .btn-consult { display: inline-block; background: #1e4a7a; color: white; padding: 1rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 500; margin: 2rem 0; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-consult:hover { background: #235f97; transform: translateY(-2px); }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.3); border-radius: 1rem; overflow: hidden; }
+    td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.3); }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="background-aura"></div>
+<div class="container">
+  <div class="nav-bar">
+    <div class="logo">智屿·全屋智能</div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="cases.html" class="active">方案与案例</a>
+      <a href="demo.html">虚拟演示</a>
+      <a href="about.html">关于我们</a>
+    </div>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+    <span class="separator"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i></span>
+    <a href="cases.html">方案与案例</a>
+    <span class="separator"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i></span>
+    <span class="current">气候管家 Pro</span>
+  </div>
+
+  <div class="solution-hero">
+    <div class="hero-image"><img src="https://images.unsplash.com/photo-1581092335871-4f4ff9b6b09b?w=800" alt="智能气候系统"></div>
+    <div class="hero-content">
+      <h1>气候管家 Pro</h1>
+      <div class="hero-meta"><span>200㎡</span><span>深圳·半岛城邦</span><span>2025.09竣工</span></div>
+      <p>分区温控+新风除湿联动，每个房间独立设置温湿度。CO₂、PM2.5实时监测，自动置换新鲜空气，打造四季如春的健康家。</p>
+      <div style="display:flex; gap:1rem;"><span style="background:#1e4a7a; color:white; padding:0.3rem 1rem; border-radius:30px;">分户控温</span><span style="background:#1e4a7a; color:white; padding:0.3rem 1rem; border-radius:30px;">CO₂监测</span><span style="background:#1e4a7a; color:white; padding:0.3rem 1rem; border-radius:30px;">自学习</span></div>
+    </div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-wind"></i> 设计理念</div>
+  <p style="padding:2rem; background:rgba(255,255,255,0.3); border-radius:2rem;">关注看不见的舒适：温度、湿度、空气质量、含氧量。通过多点传感器和AI算法，让全屋气候自动平衡，老人孩子不易感冒，过敏季也能自在呼吸。</p>
+
+  <div class="section-title"><i class="fas fa-microchip"></i> 核心设备</div>
+  <div class="device-grid">
+    <div class="device-card"><i class="fas fa-thermometer-half"></i><h3>温湿度传感器</h3><p>12个，每个房间独立监测</p></div>
+    <div class="device-card"><i class="fas fa-wind"></i><h3>新风主机</h3><p>350m³/h全热交换，PM2.5过滤</p></div>
+    <div class="device-card"><i class="fas fa-water"></i><h3>除湿机</h3><p>2台，联动控制（地下室/卫生间）</p></div>
+    <div class="device-card"><i class="fas fa-snowflake"></i><h3>中央空调控制器</h3><p>8个，兼容大金/日立/三菱</p></div>
+    <div class="device-card"><i class="fas fa-fire"></i><h3>地暖分集水器</h3><p>6路，手机远程控制</p></div>
+    <div class="device-card"><i class="fas fa-leaf"></i><h3>空气质量检测仪</h3><p>3个，CO₂/PM2.5/VOC</p></div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-scroll"></i> 智能场景</div>
+  <div class="scene-list">
+    <div class="scene-item"><strong>自动恒温：</strong>每个房间独立设定温度，系统根据传感器数据自动调节空调/地暖，温差控制在±0.5℃。</div>
+    <div class="scene-item"><strong>智能新风：</strong>当CO₂浓度超过800ppm，自动开启新风；PM2.5超标时自动切换内循环过滤。</div>
+    <div class="scene-item"><strong>除湿联动：</strong>卫生间/地下室湿度高于70%时，自动开启除湿机，低于50%自动关闭。</div>
+    <div class="scene-item"><strong>睡眠曲线：</strong>入睡后2小时内每半小时降温1℃，凌晨4点开始升温，保证深度睡眠。</div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-hard-hat"></i> 施工过程</div>
+  <div class="timeline-steps">
+    <div class="step"><div class="step-dot">1</div><div>设备选型</div><div>2025.06</div></div>
+    <div class="step"><div class="step-dot">2</div><div>风管安装</div><div>2025.07</div></div>
+    <div class="step"><div class="step-dot">3</div><div>传感器布线</div><div>2025.08</div></div>
+    <div class="step"><div class="step-dot">4</div><div>联动调试</div><div>2025.09</div></div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-images"></i> 实景照片</div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581092335871-4f4ff9b6b09b?w=400" alt="新风主机"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400" alt="温控面板"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1558030137-4e67cccbd7d4?w=400" alt="空气质量检测"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400" alt="舒适客厅"></div>
+  </div>
+
+  <div style="background:rgba(255,255,255,0.4); border-radius:2rem; padding:2rem;">
+    <h3>📊 技术参数</h3>
+    <table>
+      <tr><td>温度精度</td><td>±0.3℃</td></tr>
+      <tr><td>湿度精度</td><td>±3%RH</td></tr>
+      <tr><td>新风量</td><td>350m³/h，热回收效率75%</td></tr>
+      <tr><td>设备总数</td><td>56个智能设备</td></tr>
+    </table>
+  </div>
+
+  <div style="text-align:center;"><button class="btn-consult" onclick="openConsultModal()"><i class="fas fa-headset"></i> 预约舒适度评估</button></div>
+
+  <div class="footer-minimal">
+    <span><i class="far fa-copyright"></i> 2025 智屿 · 全屋智能体验</span>
+    <div class="footer-links">
+      <span><i class="fa-regular fa-message"></i> 咨询顾问</span>
+      <span><i class="fa-regular fa-file-lines"></i> 方案手册</span>
+      <span><i class="fa-regular fa-images"></i> 实景相册</span>
+    </div>
+  </div>
+</div>
+
+<script src="consult-modal.js"></script>
+</body>
+</html>
