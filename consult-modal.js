@@ -5,6 +5,9 @@ function createConsultModal() {
   // 检查是否已存在
   if (document.getElementById('consultModal')) return;
 
+  // 构建图片路径
+  const wechatQrUrl = `images/wechat.jpg`;
+
   const modalHtml = `
     <!-- 预约咨询弹窗 -->
     <div class="consult-modal" id="consultModal" onclick="closeConsultModal(event)">
@@ -22,11 +25,11 @@ function createConsultModal() {
               <span>扫码添加顾问微信，获取专属方案</span>
             </div>
           </a>
-          <a class="modal-option" href="tel:400-888-8888">
+          <a class="modal-option" href="tel:+8618874284015">
             <i class="fas fa-phone-alt" style="color: #1e4a7a;"></i>
             <div class="modal-option-text">
               <strong>电话咨询</strong>
-              <span>拨打 400-888-8888，立即沟通</span>
+              <span>拨打 +8618874284015，立即沟通</span>
             </div>
           </a>
         </div>
@@ -39,11 +42,11 @@ function createConsultModal() {
         <button class="modal-close" onclick="closeWechatModal()">&times;</button>
         <h3><i class="fab fa-weixin" style="color: #07C160;"></i> 扫码添加微信</h3>
         <div class="wechat-qr">
-          <i class="fas fa-qrcode" style="font-size: 4rem; color: #7895b2;"></i>
+          <img src="${wechatQrUrl}" alt="微信二维码" style="width: 100%; height: 100%; object-fit: cover; border-radius: 1rem;">
         </div>
         <p>微信扫一扫，添加专属顾问</p>
         <div class="wechat-tip">
-          <i class="fas fa-info-circle"></i> 工作时间：9:00-21:00，顾问将在10分钟内回复
+          <i class="fas fa-info-circle"></i> 工作时间：9:00-23:00，顾问将在10分钟内回复
         </div>
       </div>
     </div>

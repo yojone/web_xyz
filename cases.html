@@ -113,31 +113,6 @@
     .stat-number { font-size: 2.8rem; font-weight: 700; color: #123a58; line-height: 1.2; }
     .stat-label { font-weight: 300; color: #2b5a80; letter-spacing: 0.3px; }
     
-    /* 预约咨询弹窗 */
-    .consult-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-    .consult-modal.active { display: flex; }
-    .modal-content { background: white; border-radius: 2rem; padding: 2.5rem; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
-    .modal-header { margin-bottom: 1.5rem; }
-    .modal-header h3 { font-size: 1.5rem; color: #123a58; margin-bottom: 0.5rem; }
-    .modal-header p { color: #5a7897; font-size: 0.95rem; }
-    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: #7895b2; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-    .modal-close:hover { background: rgba(30,74,122,0.1); color: #1e4a7a; }
-    .modal-options { display: flex; flex-direction: column; gap: 1rem; }
-    .modal-option { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; background: rgba(245,248,254,0.8); border-radius: 1rem; cursor: pointer; transition: 0.2s; border: 2px solid transparent; text-decoration: none; color: inherit; }
-    .modal-option:hover { background: rgba(30,74,122,0.1); border-color: #1e4a7a; }
-    .modal-option i { font-size: 1.5rem; color: #1e4a7a; width: 40px; }
-    .modal-option-text { text-align: left; }
-    .modal-option-text strong { display: block; color: #123a58; font-size: 1.1rem; margin-bottom: 0.2rem; }
-    .modal-option-text span { color: #5a7897; font-size: 0.85rem; }
-    
-    /* 微信二维码弹窗 */
-    .wechat-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-    .wechat-modal.active { display: flex; }
-    .wechat-content { background: white; border-radius: 2rem; padding: 2rem; max-width: 350px; width: 90%; text-align: center; position: relative; }
-    .wechat-content h3 { color: #123a58; margin-bottom: 1rem; }
-    .wechat-qr { width: 200px; height: 200px; background: #f0f0f0; border-radius: 1rem; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: #7895b2; }
-    .wechat-content p { color: #5a7897; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .wechat-tip { background: rgba(30,74,122,0.1); padding: 0.8rem; border-radius: 0.8rem; font-size: 0.85rem; color: #1e4a7a; }
     
     /* 页脚 */
     .footer-minimal { margin-top: 5rem; padding: 2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; color: #2d5272; border-top: 1px solid rgba(255,255,255,0.7); font-weight: 300; }
@@ -259,7 +234,7 @@
       <!-- 方案3：无人化自助管家 -->
       <div class="solution-card" data-category="solution commercial">
         <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1598928501494-4e49d2b3f6d5?w=800&auto=format&fit=crop" alt="民宿智能">
+          <img src="https://69b41ea2d7351016cf20d68d.imgix.net/livingroom1.webp?w=1080&h=1080&rect=0%2C370%2C1080%2C1069&fit=crop&auto=format&fit=crop" alt="民宿智能">
         </div>
         <div class="card-content">
           <span class="solution-tag"><i class="fas fa-hotel"></i> 民宿 · 6间客房</span>
@@ -277,7 +252,7 @@
       <!-- 方案4：气候管家 Pro -->
       <div class="solution-card" data-category="solution apartment">
         <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1581092335871-4f4ff9b6b09b?w=800&auto=format&fit=crop" alt="气候管家">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?&w=800&auto=format&fit=crop" alt="气候管家">
         </div>
         <div class="card-content">
           <span class="solution-tag"><i class="fas fa-building"></i> 大平层 · 200㎡</span>
@@ -301,7 +276,7 @@
           <div class="case-meta">
             <span class="case-location"><i class="fas fa-map-marker-alt"></i> 长沙·梅溪湖</span>
             <span class="case-area"><i class="fas fa-ruler-combined"></i> 180㎡</span>
-            <span class="case-area"><i class="fas fa-calendar"></i> 2021.09</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2023.09</span>
           </div>
           <h3>梅溪湖全宅智能·新中式融合</h3>
           <p class="case-desc">全宅智能灯光、空调、电动窗帘控制系统，客厅影院娱乐一体化。面板设计与新中式风格完美融合。</p>
@@ -314,18 +289,18 @@
         </div>
       </div>
 
-      <!-- 案例2：安纳溪湖别墅 -->
+      <!-- 案例2：麓谷锦园别墅智能大宅 -->
       <div class="solution-card case-card" data-category="case villa">
         <div class="card-image case-image">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop" alt="安纳溪湖别墅">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop" alt="麓谷锦园别墅">
         </div>
         <div class="card-content">
           <div class="case-meta">
-            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 重庆·安纳溪湖</span>
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 长沙·麓谷锦园</span>
             <span class="case-area"><i class="fas fa-ruler-combined"></i> 320㎡</span>
-            <span class="case-area"><i class="fas fa-calendar"></i> 2022.06</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2023.06</span>
           </div>
-          <h3>安纳溪湖·全宅智能别墅</h3>
+          <h3>麓谷锦园·全宅智能别墅</h3>
           <p class="case-desc">采用Aqara全屋智能系统，全宅配置超过100个智能设备。包含智能灯光、窗帘、背景音乐、安防监控。</p>
           <div class="device-list">
             <span class="device-tag">Aqara网关M1S ×8</span>
@@ -336,18 +311,18 @@
         </div>
       </div>
 
-      <!-- 案例3：原上简约智能宅 -->
+      <!-- 案例3：洋湖垸现代智能宅 -->
       <div class="solution-card case-card" data-category="case apartment">
         <div class="card-image case-image">
-          <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&auto=format&fit=crop" alt="原上智能宅">
+          <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&auto=format&fit=crop" alt="洋湖垸智能宅">
         </div>
         <div class="card-content">
           <div class="case-meta">
-            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 重庆·金科美的原上</span>
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 长沙·洋湖垸</span>
             <span class="case-area"><i class="fas fa-ruler-combined"></i> 168㎡</span>
-            <span class="case-area"><i class="fas fa-calendar"></i> 2022.04</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2024.04</span>
           </div>
-          <h3>原上·简约主义智能宅</h3>
+          <h3>洋湖垸·现代主义智能宅</h3>
           <p class="case-desc">采用欧瑞博智能系统，12.3寸MixPad X智能大屏控制全屋，流线型弧形灯带设计，楼梯梯步感应。</p>
           <div class="device-list">
             <span class="device-tag">欧瑞博MixPad X</span>
@@ -358,18 +333,18 @@
         </div>
       </div>
 
-      <!-- 案例4："好房子"移动样板房 -->
+      <!-- 案例4：松雅湖移动样板房 -->
       <div class="solution-card case-card" data-category="case commercial">
         <div class="card-image case-image">
-          <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop" alt="移动样板房">
+          <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop" alt="松雅湖移动样板房">
         </div>
         <div class="card-content">
           <div class="case-meta">
-            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 重庆·"好房子"移动样板房</span>
+            <span class="case-location"><i class="fas fa-map-marker-alt"></i> 长沙·松雅湖</span>
             <span class="case-area"><i class="fas fa-ruler-combined"></i> 120㎡</span>
-            <span class="case-area"><i class="fas fa-calendar"></i> 2022.10</span>
+            <span class="case-area"><i class="fas fa-calendar"></i> 2024.10</span>
           </div>
-          <h3>"好房子"·移动样板房</h3>
+          <h3>松雅湖·移动样板房</h3>
           <p class="case-desc">采用希斯腾科智能系统，包含智能灯光、电动窗帘、背景音乐、安防监控。展示智能生活场景。</p>
           <div class="device-list">
             <span class="device-tag">希斯腾科智能系统</span>
@@ -384,19 +359,19 @@
     <!-- 统计横幅 -->
     <div class="stats-banner">
       <div class="stat-item">
-        <div class="stat-number">430万+</div>
+        <div class="stat-number">110+</div>
         <div class="stat-label">服务家庭</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">800+</div>
-        <div class="stat-label">全国门店</div>
+        <div class="stat-number">3+</div>
+        <div class="stat-label">全市门店</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">13年</div>
+        <div class="stat-number">10年</div>
         <div class="stat-label">行业经验</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">98%</div>
+        <div class="stat-number">99%</div>
         <div class="stat-label">客户满意度</div>
       </div>
     </div>
@@ -408,7 +383,7 @@
 
     <!-- 页脚 -->
     <div class="footer-minimal">
-      <span><i class="far fa-copyright"></i> 2025 智屿 · 全屋智能体验</span>
+      <span><i class="far fa-copyright"></i> 2026 智屿 · 全屋智能体验</span>
       <div class="footer-links">
         <span><i class="fa-regular fa-message"></i> 咨询顾问</span>
         <span><i class="fa-regular fa-file-lines"></i> 方案手册</span>
@@ -417,71 +392,7 @@
     </div>
   </div>
 
-  <!-- 预约咨询弹窗 -->
-  <div class="consult-modal" id="consultModal" onclick="closeConsultModal(event)">
-    <div class="modal-content" style="position: relative;" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeConsultModal()">&times;</button>
-      <div class="modal-header">
-        <h3><i class="fas fa-headset" style="color: #1e4a7a;"></i> 预约免费咨询</h3>
-        <p>选择您方便的咨询方式</p>
-      </div>
-      <div class="modal-options">
-        <a class="modal-option" onclick="openWechatModal()">
-          <i class="fab fa-weixin" style="color: #07C160;"></i>
-          <div class="modal-option-text">
-            <strong>微信咨询</strong>
-            <span>扫码添加顾问微信，获取专属方案</span>
-          </div>
-        </a>
-        <a class="modal-option" href="tel:400-888-8888">
-          <i class="fas fa-phone-alt" style="color: #1e4a7a;"></i>
-          <div class="modal-option-text">
-            <strong>电话咨询</strong>
-            <span>拨打 400-888-8888，立即沟通</span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 微信二维码弹窗 -->
-  <div class="wechat-modal" id="wechatModal" onclick="closeWechatModal(event)">
-    <div class="wechat-content" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeWechatModal()">&times;</button>
-      <h3><i class="fab fa-weixin" style="color: #07C160;"></i> 扫码添加微信</h3>
-      <div class="wechat-qr">
-        <i class="fas fa-qrcode" style="font-size: 4rem; color: #7895b2;"></i>
-      </div>
-      <p>微信扫一扫，添加专属顾问</p>
-      <div class="wechat-tip">
-        <i class="fas fa-info-circle"></i> 工作时间：9:00-21:00，顾问将在10分钟内回复
-      </div>
-    </div>
-  </div>
-
   <script>
-    function openConsultModal() {
-      document.getElementById('consultModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeConsultModal(event) {
-      if (!event || event.target.id === 'consultModal') {
-        document.getElementById('consultModal').classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-
-    function openWechatModal() {
-      document.getElementById('wechatModal').classList.add('active');
-    }
-
-    function closeWechatModal(event) {
-      if (!event || event.target.id === 'wechatModal') {
-        document.getElementById('wechatModal').classList.remove('active');
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
       const filterTabs = document.querySelectorAll('.filter-tab');
       const cards = document.querySelectorAll('.solution-card');
@@ -507,15 +418,10 @@
         });
       });
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeConsultModal();
-          closeWechatModal();
-        }
-      });
-
-
     });
   </script>
+
+  <!-- 咨询弹窗脚本 -->
+  <script src="consult-modal.js"></script>
 </body>
 </html>
