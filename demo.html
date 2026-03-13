@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入公共组件 -->
+    <script src="components.js"></script>
     
     <!-- SEO优化 -->
     <meta name="description" content="体验智屿全屋智能三室两厅3D演示：回家模式、离家模式、观影模式、睡眠模式、起床模式一键切换。沉浸式感受智能家居场景化控制。">
@@ -52,6 +54,44 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 60px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .nav-bar.scrolled {
+            top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+        }
+        .nav-bar.scrolled .logo {
+            font-size: 1.3rem;
+        }
+        .nav-bar.scrolled .nav-links a {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(30, 40, 55, 0.8);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .back-to-top:hover {
+            background: rgba(30, 40, 55, 1);
+            transform: translateY(-5px);
+        }
+        .back-to-top i {
+            font-size: 1.2rem;
         }
 
         .logo {
@@ -210,6 +250,25 @@
                 right: 0.5rem;
                 padding: 0.5rem 1rem;
             }
+            .nav-bar.scrolled {
+                padding: 0.4rem 0.8rem;
+            }
+            .nav-bar.scrolled .logo {
+                font-size: 1.1rem;
+            }
+            .nav-bar.scrolled .nav-links a {
+                margin-left: 0.6rem;
+                font-size: 0.75rem;
+            }
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
 
             .nav-links a {
                 margin-left: 0.8rem;
@@ -314,15 +373,13 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <div class="nav-bar">
-        <div class="logo">智屿 · 3D三室两厅</div>
-        <div class="nav-links">
-            <a href="index.html">首页</a>
-            <a href="cases.html">方案与案例</a>
-            <a href="demo.html" class="active">虚拟演示</a>
-        </div>
-    </div>
+    <!-- 导航栏占位符 - 由components.js动态生成 -->
+    <div data-component="navbar"></div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <!-- 左侧场景模式面板 -->
     <div class="scene-panel">
@@ -1317,6 +1374,21 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             labelRenderer.setSize(window.innerWidth, window.innerHeight);
         }
+
+        // --- 导航栏缩放和返回顶部按钮 ---
+        const navBar = document.querySelector('.nav-bar');
+        const backToTop = document.getElementById('backToTop');
+        
+        // demo页面是全屏3D，没有滚动，直接显示稍微缩小的导航栏
+        navBar.classList.add('scrolled');
+        
+        // 显示返回顶部按钮
+        backToTop.style.display = 'flex';
+        
+        // 点击返回顶部（其实是回到首页）
+        backToTop.addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
     </script>
 </body>
 </html>
