@@ -69,11 +69,13 @@ document.addEventListener('DOMContentLoaded', function() {
     placeholder.outerHTML = generateFooter();
   });
   
-  // 导航栏自动缩放功能
+  // 导航栏自动缩放功能 - 性能优化版
   const navBar = document.querySelector('.nav-bar-scalable');
   if (navBar) {
+    let ticking = false;
     let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
+    
+    function updateNavBar() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
       if (scrollTop > 50) {
@@ -83,7 +85,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       lastScrollTop = scrollTop;
-    });
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(updateNavBar);
+        ticking = true;
+      }
+    }, { passive: true });
   }
   
   // 添加返回顶部按钮
@@ -93,15 +103,24 @@ document.addEventListener('DOMContentLoaded', function() {
   backToTopBtn.style.display = 'none';
   document.body.appendChild(backToTopBtn);
   
-  // 显示/隐藏返回顶部按钮
-  window.addEventListener('scroll', function() {
+  // 显示/隐藏返回顶部按钮 - 使用节流优化
+  let backToTopTicking = false;
+  function updateBackToTop() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (scrollTop > 300) {
       backToTopBtn.style.display = 'flex';
     } else {
       backToTopBtn.style.display = 'none';
     }
-  });
+    backToTopTicking = false;
+  }
+  
+  window.addEventListener('scroll', function() {
+    if (!backToTopTicking) {
+      requestAnimationFrame(updateBackToTop);
+      backToTopTicking = true;
+    }
+  }, { passive: true });
   
   // 点击返回顶部
   backToTopBtn.addEventListener('click', function() {

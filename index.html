@@ -102,13 +102,7 @@
     }
 
     /* 导航栏 */
-    .nav-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      transition: all 0.3s ease;
-    }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0 2rem 0; transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; will-change: transform; }
     .nav-bar-scalable.scrolled {
       position: fixed;
       top: 0;
@@ -116,9 +110,11 @@
       right: 0;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 0.5rem 2.5rem;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
+      transform: translateZ(0);
     }
     .nav-bar-scalable.scrolled .logo {
       font-size: 1.3rem;
@@ -143,46 +139,25 @@
       justify-content: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       z-index: 999;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      will-change: transform;
+      transform: translateZ(0);
     }
     .back-to-top:hover {
       background: #235f97;
-      transform: translateY(-5px);
+      transform: translateY(-5px) translateZ(0);
     }
     .back-to-top i {
       font-size: 1.2rem;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(145deg, #1d4a7a, #31699e);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-      cursor: default;
-    }
+    .logo { font-size: 1.8rem; font-weight: 700; background: linear-gradient(145deg, #1d4a7a, #31699e); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; cursor: default; transition: font-size 0.3s ease; }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #2b4e6f;
-      margin-left: 2.5rem;
-      font-weight: 500;
-      padding-bottom: 0.3rem;
-      border-bottom: 2px solid transparent;
-      transition: 0.2s;
-    }
+    .nav-links a { text-decoration: none; color: #2b4e6f; margin-left: 2.5rem; font-weight: 500; padding-bottom: 0.3rem; border-bottom: 2px solid transparent; transition: color 0.2s ease, border-bottom-color 0.2s ease; }
 
-    .nav-links a:hover {
-      color: #1e4a7a;
-      border-bottom-color: #1e4a7a;
-    }
+    .nav-links a:hover { color: #1e4a7a; border-bottom-color: #1e4a7a; }
 
-    .nav-links a.active {
-      border-bottom-color: #1e4a7a;
-      color: #1e4a7a;
-    }
+    .nav-links a.active { border-bottom-color: #1e4a7a; color: #1e4a7a; }
 
     /* 精致轻薄的卡片效果 */
     .glass-panel {
@@ -576,12 +551,6 @@
       .hub-showcase { flex-direction: column; text-align: center; }
       .spec-mini { justify-content: center; }
     }
-    @media (max-width: 550px) {
-      .container { padding: 1rem 1.2rem; }
-      .rooms-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 2.6rem; }
-      .quote-text { font-size: 1.3rem; }
-    }
 
     /* 一些点缀小图标 */
     .float-particle {
@@ -606,14 +575,16 @@
     @media screen and (max-width: 768px) {
       /* 容器内边距调整 */
       .container {
-        padding: 1rem 0.8rem;
+        padding: 1rem;
       }
 
       /* 导航栏移动端优化 */
       .nav-bar {
         flex-direction: column;
         gap: 1rem;
-        padding: 1rem 0;
+      }
+      .nav-links a {
+        margin-left: 1rem;
       }
       .nav-bar-scalable.scrolled {
         padding: 0.5rem 1rem;
@@ -627,28 +598,6 @@
         right: 20px;
         width: 40px;
         height: 40px;
-      }
-
-      .nav-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.8rem;
-      }
-
-      .nav-links a {
-        margin-left: 0;
-        font-size: 0.9rem;
-        padding: 0.3rem 0.8rem;
-        background: rgba(255,255,255,0.3);
-        border-radius: 30px;
-        border: 1px solid rgba(255,255,255,0.5);
-      }
-
-      .nav-links a.active {
-        background: #1e4a7a;
-        color: white;
-        border-color: #1e4a7a;
       }
 
       /* 首页Hero区域优化 */
@@ -889,24 +838,6 @@
 
       .hero {
         padding: 1rem;
-      }
-    }
-
-    /* 触摸优化 */
-    @media (hover: none) and (pointer: coarse) {
-      /* 增加点击区域 */
-      .nav-links a,
-      .btn,
-      .filter-tab,
-      .footer-links span {
-        padding: 0.8rem 1.2rem;
-      }
-
-      /* 移除悬停效果 */
-      .scene-card:hover,
-      .solution-card:hover,
-      .case-card:hover {
-        transform: none;
       }
     }
 

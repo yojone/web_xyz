@@ -16,7 +16,7 @@
     body { font-family: 'Inter', sans-serif; background-color: #f5f8fe; color: #1a2b3c; line-height: 1.5; }
     .background-aura { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 80% 20%, rgba(180, 215, 255, 0.3) 0%, transparent 35%), radial-gradient(circle at 20% 80%, rgba(140, 200, 245, 0.25) 0%, transparent 40%), linear-gradient(135deg, #f0f5ff 0%, #f5f9ff 100%); z-index: -2; }
     .container { max-width: 1300px; margin: 0 auto; padding: 2rem 2.5rem; }
-    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0 2rem 0; transition: all 0.3s ease; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0 2rem 0; transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; will-change: transform; }
     .nav-bar-scalable.scrolled {
       position: fixed;
       top: 0;
@@ -24,9 +24,11 @@
       right: 0;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 0.5rem 2.5rem;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
+      transform: translateZ(0);
     }
     .nav-bar-scalable.scrolled .logo {
       font-size: 1.3rem;
@@ -51,31 +53,27 @@
       justify-content: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       z-index: 999;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      will-change: transform;
+      transform: translateZ(0);
     }
     .back-to-top:hover {
       background: #235f97;
-      transform: translateY(-5px);
+      transform: translateY(-5px) translateZ(0);
     }
     .back-to-top i {
       font-size: 1.2rem;
     }
     .logo { font-size: 1.8rem; font-weight: 700; background: linear-gradient(145deg, #1d4a7a, #31699e); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .nav-links a { text-decoration: none; color: #2b4e6f; margin-left: 2.5rem; font-weight: 500; transition: 0.2s; }
+    .nav-links a { text-decoration: none; color: #2b4e6f; margin-left: 2.5rem; font-weight: 500; transition: color 0.2s ease, border-bottom-color 0.2s ease; }
     .nav-links a:hover { color: #1e4a7a; }
     .nav-links a.active { color: #1e4a7a; border-bottom: 2px solid #1e4a7a; padding-bottom: 0.2rem; }
     .footer-minimal { margin-top: 5rem; padding: 2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; color: #2d5272; border-top: 1px solid rgba(255,255,255,0.7); font-weight: 300; }
     .footer-links span { margin-left: 2rem; opacity: 0.7; cursor: default; }
-    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
-    .breadcrumb a { text-decoration: none; color: #2b5a80; transition: 0.2s; }
-    .breadcrumb a:hover { color: #1e4a7a; }
-    .breadcrumb .separator { color: #9bb7d4; }
-    .breadcrumb .current { color: #1e4a7a; font-weight: 500; }
     @media (max-width: 768px) { 
       .container { padding: 1rem; } 
       .nav-bar { flex-direction: column; gap: 1rem; } 
       .nav-links a { margin-left: 1rem; }
-      .breadcrumb { font-size: 0.85rem; flex-wrap: wrap; }
     }
     .case-hero { display: flex; gap: 2rem; background: rgba(255,255,255,0.4); backdrop-filter: blur(16px); border-radius: 2.5rem; padding: 2rem; margin-bottom: 3rem; border: 1px solid rgba(255,255,255,0.7); flex-wrap: wrap; }
     .hero-image { flex: 1; min-width: 300px; height: 300px; border-radius: 1.5rem; overflow: hidden; }
@@ -105,14 +103,6 @@
 <div class="container">
   <!-- 导航栏占位符 - 由components.js动态生成 -->
   <div data-component="navbar"></div>
-
-  <div class="breadcrumb">
-    <a href="index.html"><i class="fas fa-home"></i> 首页</a>
-    <span class="separator"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i></span>
-    <a href="cases.html">方案与案例</a>
-    <span class="separator"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i></span>
-    <span class="current">光影魔术师</span>
-  </div>
 
   <div class="case-hero">
     <div class="hero-image">
