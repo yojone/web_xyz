@@ -1,5 +1,188 @@
 // components.js - 所有页面的公共组件
 
+// ==================== 滚动位置管理器 ====================
+// 用于移动端应用中保存和恢复页面滚动位置
+(function() {
+  'use strict';
+
+  // 配置项
+  const CONFIG = {
+    storageKey: 'page_scroll_positions',
+    throttleDelay: 200, // 滚动事件节流延迟（毫秒）
+    restoreDelay: 100,  // 页面加载后恢复延迟（毫秒）
+    maxEntries: 50      // 最大保存的页面条目数
+  };
+
+  // 获取当前页面唯一标识
+  function getPageKey() {
+    return window.location.pathname + window.location.search;
+  }
+
+  // 从 sessionStorage 读取滚动位置数据
+  function getScrollData() {
+    try {
+      const data = sessionStorage.getItem(CONFIG.storageKey);
+      return data ? JSON.parse(data) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  // 保存滚动位置数据到 sessionStorage
+  function saveScrollData(data) {
+    try {
+      // 限制条目数量，防止数据过大
+      const entries = Object.entries(data);
+      if (entries.length > CONFIG.maxEntries) {
+        // 删除最旧的条目
+        const sortedEntries = entries.sort((a, b) => (a[1].timestamp || 0) - (b[1].timestamp || 0));
+        const trimmedData = Object.fromEntries(sortedEntries.slice(-CONFIG.maxEntries));
+        sessionStorage.setItem(CONFIG.storageKey, JSON.stringify(trimmedData));
+      } else {
+        sessionStorage.setItem(CONFIG.storageKey, JSON.stringify(data));
+      }
+    } catch (e) {
+      // 忽略存储错误
+    }
+  }
+
+  // 保存当前页面滚动位置
+  function saveScrollPosition() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    
+    // 只保存非零的滚动位置
+    if (scrollTop > 0) {
+      const data = getScrollData();
+      data[getPageKey()] = {
+        position: scrollTop,
+        timestamp: Date.now()
+      };
+      saveScrollData(data);
+    }
+  }
+
+  // 恢复页面滚动位置
+  function restoreScrollPosition() {
+    const data = getScrollData();
+    const pageKey = getPageKey();
+    const savedData = data[pageKey];
+
+    if (savedData && savedData.position > 0) {
+      // 延迟恢复，确保页面完全渲染
+      setTimeout(() => {
+        // 检查页面高度是否足够滚动到目标位置
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const targetPosition = Math.min(savedData.position, maxScroll);
+        
+        if (targetPosition > 0) {
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'auto' // 使用 'auto' 避免动画，立即定位
+          });
+        }
+        
+        // 恢复后删除该记录，避免重复恢复
+        delete data[pageKey];
+        saveScrollData(data);
+      }, CONFIG.restoreDelay);
+    }
+  }
+
+  // 节流函数
+  function throttle(func, delay) {
+    let timeoutId = null;
+    let lastExecTime = 0;
+    
+    return function(...args) {
+      const currentTime = Date.now();
+      
+      if (currentTime - lastExecTime > delay) {
+        func.apply(this, args);
+        lastExecTime = currentTime;
+      } else {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+          lastExecTime = Date.now();
+        }, delay - (currentTime - lastExecTime));
+      }
+    };
+  }
+
+  // 为所有内部链接添加点击事件，保存滚动位置
+  function setupLinkHandlers() {
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (!link) return;
+      
+      const href = link.getAttribute('href');
+      if (!href) return;
+      
+      // 只处理内部链接
+      if (href.startsWith('#')) return;
+      if (href.startsWith('javascript:')) return;
+      if (link.target === '_blank') return;
+      
+      // 检查是否是外部链接
+      try {
+        const linkUrl = new URL(href, window.location.href);
+        if (linkUrl.origin !== window.location.origin) return;
+      } catch (e) {
+        // URL 解析失败，可能是相对路径，继续处理
+      }
+      
+      // 保存当前滚动位置
+      saveScrollPosition();
+    });
+  }
+
+  // 初始化滚动位置管理器
+  function init() {
+    // 页面加载完成后恢复滚动位置
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', restoreScrollPosition);
+    } else {
+      restoreScrollPosition();
+    }
+    
+    // 监听滚动事件，使用节流
+    const throttledSave = throttle(saveScrollPosition, CONFIG.throttleDelay);
+    window.addEventListener('scroll', throttledSave, { passive: true });
+    
+    // 页面卸载前保存滚动位置
+    window.addEventListener('beforeunload', saveScrollPosition);
+    window.addEventListener('pagehide', saveScrollPosition);
+    
+    // 为链接添加点击处理
+    setupLinkHandlers();
+    
+    // 监听 visibilitychange，处理切换标签页的情况
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        saveScrollPosition();
+      }
+    });
+  }
+
+  // 公共 API
+  window.ScrollPositionManager = {
+    save: saveScrollPosition,
+    restore: restoreScrollPosition,
+    clear: function() {
+      sessionStorage.removeItem(CONFIG.storageKey);
+    },
+    getCurrentPosition: function() {
+      return window.pageYOffset || document.documentElement.scrollTop || 0;
+    }
+  };
+
+  // 自动初始化
+  init();
+
+})();
+
+// ==================== 公共组件 ====================
+
 // 页脚版权信息
 const FOOTER_TEXT = "2026 智屿 · 全屋智能体验";
 
